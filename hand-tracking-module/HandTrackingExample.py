@@ -24,4 +24,8 @@ while True:
     cv2.putText(img, str(int(fps)), (5, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 2)
 
     cv2.imshow("Image", img)
-    cv2.waitKey(1)
+    if cv2.waitKey(0) == 27:
+        cv2.destroyAllWindows()
+        break
+
+cv2.destroyAllWindows()

@@ -13,6 +13,8 @@ mpDraw = mp.solutions.drawing_utils
 
 pTime = 0
 cTime = 0
+fps = 30
+i = 0
 
 while True:
     success, img = cap.read()
@@ -32,11 +34,19 @@ while True:
 
             mpDraw.draw_landmarks(img, handLms, mpHands.HAND_CONNECTIONS)
 
-    cTime = time.time()
-    fps = 1 / (cTime - pTime)
-    pTime = cTime
+    i += 1
+    if i >= 5:
+        cTime = time.time()
+        fps = 1 / (cTime - pTime) * 5
+        pTime = cTime
+        i = 0
 
     cv2.putText(img, str(int(fps)), (5, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 2)
-
     cv2.imshow("Image", img)
-    cv2.waitKey(1)
+
+    if cv2.waitKey(1) == 27:
+        break
+    if cv2.getWindowProperty('Image', cv2.WND_PROP_VISIBLE) < 1:
+        break
+
+cv2.destroyAllWindows()
