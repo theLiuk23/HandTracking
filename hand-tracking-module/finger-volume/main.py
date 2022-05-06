@@ -1,17 +1,15 @@
 import cv2
 import time
 import numpy as np
-import HandTracking as ht
+import HandTrackingLibrary as ht
 import math
 from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 
 wCam, hCam = 640, 480
-
 vol = 0
 volBar = 0
-
 pTime = 0
 timeStart = time.time()
 intervallo = 0.1
@@ -62,8 +60,8 @@ while True:
         if timeOne >= intervallo:
             # print(timeOne)
 
-            vol = np.interp(lenght, [50, 250], [minVol, maxVol])
-            volBar = np.interp(lenght, [50, 250], [400, 150])
+            vol = np.interp(lenght, [50, 200], [minVol, maxVol])
+            volBar = np.interp(lenght, [50, 300], [400, 150])
 
             volume.SetMasterVolumeLevel(vol, None)
 
@@ -74,8 +72,8 @@ while True:
             cv2.circle(img, (cx,cy), 15, (0,255,0), cv2.FILLED)
         
 
-    cv2.rectangle(img, (50,150), (85,400), (0,255,0), 3)
-    cv2.rectangle(img, (50,int(volBar)), (85,400), (0,255,0), cv2.FILLED)
+    # cv2.rectangle(img, (50, 150), (85,400), (0,255,0), 3)
+    # cv2.rectangle(img, (50, int(volBar)), (85, 400), (0,255,0), cv2.FILLED)
 
     cTime = time.time()
     numFps = 1 / (cTime - pTime)
